@@ -36,7 +36,7 @@ class Maxleads
 		// Admin page calls
 		add_action('admin_menu',                array($this, 'addAdminMenu'));
 
-		add_action('admin_enqueue_scripts',     array($this, 'addAdminScripts'));
+		//add_action('admin_enqueue_scripts',     array($this, 'addAdminScripts'));
 	}
 	/**
 	 * Returns the saved options data as an array
@@ -154,7 +154,7 @@ class Maxleads
 		echo '
 			<div class="col-75">
 			<div class="form-group">
-				<label for="maxleads_test_option">Install Code</label><textarea name="maxleads_install_script" id="maxleads_install_script" class="form-control" rows="10">' . $data["maxleads_install_script"] . ' </textarea>
+				<label for="maxleads_test_option">Install Code</label><textarea name="maxleads_install_script" id="maxleads_install_script" class="form-control" rows="10">' . str_replace("\\","",$data["maxleads_install_script"]) . ' </textarea>
 				</div>';
 
 		submit_button();
@@ -174,7 +174,9 @@ class Maxleads
     {
 		$data = $this->getData();
 
-		echo $data["maxleads_install_script"];
+		if ( ! is_admin() ) {
+		echo str_replace("\\","",$data["maxleads_install_script"]);
+		}
 	}
 }
 
